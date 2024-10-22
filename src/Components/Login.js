@@ -1,16 +1,23 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { ReactComponent as Logo } from '../logo.svg';
 import { LoginContext } from '../Context/LoginContext';
 
 const Login = () => {
-    const { setIsLoggedIn } = useContext(LoginContext);
+    const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
     const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    // Check if the user is already logged in
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate('/'); // Redirect to home if logged in
+        }
+    }, [isLoggedIn, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,11 +32,10 @@ const Login = () => {
                 password,
             });
 
-            const { accessToken} = data.data;
+            const { accessToken } = data.data;
             localStorage.setItem('authToken', accessToken);
-            // localStorage.setItem('user', JSON.stringify(user));
             
-            setIsLoggedIn(true);
+            setIsLoggedIn(true); // Update login context state
             navigate('/'); // Redirect to home or any other page
         } catch (err) {
             setError(err.response?.data?.message || 'Login failed. Please try again.');
