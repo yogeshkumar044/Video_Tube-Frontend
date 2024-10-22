@@ -3,11 +3,41 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { RouterProvider , Route ,createBrowserRouter ,createRoutesFromElements } from 'react-router-dom';
+import Signup from './Components/Signup';
+import Login from './Components/Login';
+import Home from './Components/Home';
+import UserProfile from './Components/UserProfile';
+import AddVideo from './Components/Video/AddVideo';
+import VideoPage from './Components/Video/VideoPage';
+import Channel from './Components/Channel';
+import { LoginProvider } from "./Context/LoginContext";
+import History from './Components/History';
+
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path='/' element={<App/>} >
+      <Route path='' element={<Home/>} />
+      <Route path='signup' element={<Signup/>} />
+      <Route path='login' element={<Login/>} />
+      <Route path='userprofile' element={<UserProfile/>} />
+      <Route path='addvideo' element={<AddVideo/>} />
+      <Route path='video/:title' element={<VideoPage/>} />
+      <Route path='channel/:channelid' element={<Channel/>} />
+      <Route path='channel/History' element={<History/>} />
+    </Route>
+  )
+)
+
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <LoginProvider>
+     <RouterProvider router={router}/>
+     </LoginProvider>
   </React.StrictMode>
 );
 
