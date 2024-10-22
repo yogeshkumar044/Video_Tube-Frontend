@@ -16,6 +16,7 @@ function Navbar({ onSidebarToggle, isSidebarOpen }) {
       navigate('/login');
     } else {
       alert('Logout failed, please try again.');
+      console.log("test")
     }
   };
 
