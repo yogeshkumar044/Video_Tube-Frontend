@@ -18,6 +18,14 @@ module.exports = {
         '6/8': '75%',         // 6/8 width
         '7/8': '87.5%',       // 7/8 width
       },
+      screens: {
+        'xs': '480px',  // Extra small devices (phones)
+        'sm': '640px',  // Small devices (tablets)
+        'md': '768px',  // Medium screens (small laptops)
+        'lg': '1280px', // Large screens (desktops)
+        'xl': '1536px', // Extra large screens
+        '2xl': '1536px', // Very large screens
+      },
     },
   },
   plugins: [],

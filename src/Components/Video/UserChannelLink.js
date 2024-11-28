@@ -6,12 +6,14 @@ import { LoginContext } from '../../Context/LoginContext';
 import { FaThumbsUp, FaThumbsDown } from 'react-icons/fa';
 
 const OwnerInfo = ({ owner , video} ) => {
+
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [subscribersCount, setSubscribersCount] = useState(0);
   const [likesCount, setLikesCount] = useState(0);
   const [dislikesCount, setDislikesCount] = useState(0);
   const [hasLiked, setHasLiked] = useState(3); // 3 for neither like nor dislike
   const { currentUserId } = useContext(LoginContext);
+  
 
   useEffect(() => {
     if (owner) {
@@ -32,7 +34,7 @@ const OwnerInfo = ({ owner , video} ) => {
 
   const fetchLikes = async () => {
     try {
-      const data = await getVideoLikeDislikeCount(owner._id, currentUserId);
+      const data = await getVideoLikeDislikeCount(video._id, currentUserId);
       
       setLikesCount(data.likedCount);
       setDislikesCount(data.dislikedCount);

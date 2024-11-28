@@ -8,6 +8,8 @@ import VideoCard from './Video/VideoCard';
 const Channel = () => {
   const location = useLocation();
   const { owner } = location.state || {};
+  console.log(owner);
+  
   const { currentUserId } = useContext(LoginContext);
 
   const [isSubscribed, setIsSubscribed] = useState(false);

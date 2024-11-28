@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { RouterProvider , Route ,createBrowserRouter ,createRoutesFromElements } from 'react-router-dom';
+import { SearchProvider } from './Context/SearchContext';
+
 import Signup from './Components/Signup';
 import Login from './Components/Login';
 import Home from './Components/Home';
@@ -36,8 +38,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <LoginProvider>
-     <RouterProvider router={router}/>
-     </LoginProvider>
+      <SearchProvider>
+        <RouterProvider router={router}/>
+      </SearchProvider>
+    </LoginProvider>
   </React.StrictMode>
 );
 

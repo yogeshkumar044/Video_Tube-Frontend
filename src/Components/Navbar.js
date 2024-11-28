@@ -1,29 +1,43 @@
-import React, { useContext, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { LoginContext } from '../Context/LoginContext';
-import logout from '../Utilis/Logout';
-import Home from './Home';
+import React, { useContext, useState, useCallback } from "react";
+import { NavLink } from "react-router-dom";
+import { LoginContext } from "../Context/LoginContext";
+import { SearchContext } from "../Context/SearchContext";
+import logout from "../Utilis/Logout";
+import debounce from "lodash/debounce";
 
-function Navbar({ onSidebarToggle, isSidebarOpen }) {
+function Navbar({ onSidebarToggle }) {
   const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
-  const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
+  const { setSearchquery } = useContext(SearchContext);
+  const [localQuery, setLocalQuery] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
 
-  const handleLogout = async () => {
-    const result = await logout();
-    if (result.success) {
-      setIsLoggedIn(false);
-      navigate('/login');
-    } else {
-      alert('Logout failed, please try again.');
-      console.log("test")
-    }
-  };
+  // Debounced search function
+  const debouncedSearch = useCallback(
+    debounce((searchTerm) => {
+      setSearchquery(searchTerm); // Set the global search query
+      setIsSearching(false); // Stop spinner
+    }, 500),
+    []
+  );
 
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log('Search query:', searchQuery);
-  
+    if (!localQuery.trim()) return; // Ignore empty search
+    setIsSearching(true);
+    debouncedSearch(localQuery); // Execute debounced search
+  };
+
+  const handleSearchInput = (e) => {
+    const value = e.target.value;
+    setLocalQuery(value);
+    if (value.trim()) {
+      setIsSearching(true);
+      debouncedSearch(value);
+    } else {
+      debouncedSearch.cancel();
+      setSearchquery(""); // Clear global search query
+      setIsSearching(false);
+    }
   };
 
   return (
@@ -53,14 +67,13 @@ function Navbar({ onSidebarToggle, isSidebarOpen }) {
           </svg>
         </button>
 
+        {/* Logo */}
         <NavLink
           to="/"
-          className="text-3xl font-serif text-red-500  hover:text-red-700  ml-6 "
+          className="text-3xl font-serif text-red-500 hover:text-red-700 ml-6"
         >
           VideoTube
         </NavLink>
-
-
 
         {/* Search Bar */}
         <form onSubmit={handleSearch} className="flex-1 max-w-2xl mx-auto">
@@ -69,28 +82,33 @@ function Navbar({ onSidebarToggle, isSidebarOpen }) {
               type="text"
               className="w-full bg-transparent pl-2 text-[#cccccc] outline-0 py-2"
               placeholder="Search for videos"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              value={localQuery}
+              onChange={handleSearchInput}
             />
             <button
               type="submit"
               className="p-2 rounded-full text-white hover:bg-[#ff5c5c] transition-colors duration-200 focus:outline-none"
+              disabled={isSearching}
             >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M14.9536 14.9458L21 21M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
-                  stroke="#cccccc"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              {isSearching ? (
+                <div className="w-6 h-6 border-2 border-gray-300 border-t-transparent rounded-full animate-spin"></div>
+              ) : (
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M14.9536 14.9458L21 21M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z"
+                    stroke="#cccccc"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              )}
             </button>
           </div>
         </form>

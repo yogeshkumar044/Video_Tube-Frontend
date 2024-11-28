@@ -117,9 +117,9 @@ const VideoPage = () => {
   };
 
   return (
-    <div className="bg-transparent h-screen text-white flex justify-center w-screen mt-16">
+    <div className="bg-transparent h-screen text-white flex justify-center  mt-4">
       <div className="flex w-full max-w-screen-2xl mx-auto bg-transparent">
-        <div className="flex-1 pl-24 pr-6 w-8/12 space-y-0.5 bg-transparent">
+        <div className="flex-1 pl-8 pr-8 w-9/12 space-y-0.5 bg-transparent">
           <div className="w-full h-auto rounded-2xl shadow-md mb-0.5">
             <video
               ref={videoRef}
@@ -169,7 +169,7 @@ const VideoPage = () => {
           </div>
         </div>
 
-        <div className="w-4/12 bg-transparent pr-24 rounded-md shadow-md">
+        <div className="w-3/12 bg-transparent pr-24 mr-4 rounded-md shadow-md">
           <h2 className="text-xl font-semibold mb-4">Related Videos</h2>
           <div className="space-y-2">
             <div className="bg-gray-700 p-2 rounded-md hover:bg-gray-600 transition duration-200">

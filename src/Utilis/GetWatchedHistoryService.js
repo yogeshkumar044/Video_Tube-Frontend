@@ -20,7 +20,7 @@ export const getWatchedHistory = async (page = 1, limit = 12, sortBy = 'watchedA
     const { statusCode, data, message } = response.data;
     const { watchHistory ,totalWatchedVideos } = data;
 
-    // console.log(response, "getWatchedHistory");
+    console.log(response, "getWatchedHistory");
 
     if (statusCode === 200) {
       return { watchHistory, totalWatchedVideos };

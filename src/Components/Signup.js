@@ -71,19 +71,25 @@ const Signup = () => {
                 required
               />
             ))}
-            <input
-              id="avatar"
-              type="file"
-              className="w-full p-2 bg-blue-900 rounded-md border border-gray-700 focus:border-blue-700 hover:border-blue-500 transition-all duration-200 text-white"
-              onChange={handleChange}
-              required
-            />
-            <input
-              id="coverImage"
-              type="file"
-              className="w-full p-2 bg-blue-900 rounded-md border border-gray-700 focus:border-blue-700 hover:border-blue-500 transition-all duration-200 text-white"
-              onChange={handleChange}
-            />
+            <div>
+              <t>Avatar Image</t>
+              <input
+                id="avatar"
+                type="file"
+                className="w-full  bg-blue-900 rounded-md border border-gray-700 focus:border-blue-700 hover:border-blue-500 transition-all duration-200 text-white"
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div>
+            <t>Cover Image</t>
+              <input
+                id="coverImage"
+                type="file"
+                className="w-full p-2 bg-blue-900 rounded-md border border-gray-700 focus:border-blue-700 hover:border-blue-500 transition-all duration-200 text-white"
+                onChange={handleChange}
+              />
+            </div>
             <input
               id="password"
               type="password"

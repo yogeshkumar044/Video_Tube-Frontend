@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const getAllVideos = async (page = 1, limit = 12, query = '', sortBy = 'createdAt', sortType = 'desc', ownerId = null ) => {
   try {
-    console.log(query,"allalllallalallalalallalla")
+    // console.log(query,"allalllallalallalalallalla")
     const token = localStorage.getItem('authToken');
     if (!token) {
       throw new Error('No authentication token found. Please log in.');
@@ -18,7 +18,7 @@ export const getAllVideos = async (page = 1, limit = 12, query = '', sortBy = 'c
 
     const { statusCode, data, message ,moredata } = response.data;
     const {total}= moredata;
-    console.log(response,"getservise")
+    // console.log(response,"getservise")
 
     if (statusCode === 200 && Array.isArray(data)) {
       return {data,totalVideos:total}; 
